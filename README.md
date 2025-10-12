@@ -13,7 +13,6 @@ This project follows the **Medallion Architecture** pattern, organizing data int
 - **Silver Layer**: Data cleansing, transformation, and normalization to ensure consistency and usability.
 - **Gold Layer**: Business-ready data modeled into a star schema for efficient reporting and analytics.
 
-![Data Architecture](docs/data_architecture.png)
 
 ---
 
