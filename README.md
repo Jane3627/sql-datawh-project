@@ -1,73 +1,69 @@
-# sql-datawh-project
-Building a modern data warehouse with  SQL Server including ETL processes, data modeling amd analysis
+# 🧠 SQL Data Warehouse & Analytics Project
 
-Welcome to the **Data Warehouse and Analytics Project** repository!
-This project demonstrates a comprehensive data warehousing and analytics solution, from building a data warehouse to generating actionable insights. Designed as a portfolio project, it highlights industry best practices in data engineering and analytics.
-
+Welcome to my **SQL Server Data Warehouse & Analytics Portfolio Project**!  
+This end-to-end solution showcases how to build a modern data warehouse using SQL Server, implement ETL workflows, design analytical data models, and extract business insights through SQL-based reporting.
 
 ---
-## 🏗️ Data Architecture
 
-The data architecture for this project follows Medallion Architecture **Bronze**, **Silver**, and **Gold** layers:
+## 🏗️ Data Architecture Overview
+
+This project follows the **Medallion Architecture** pattern, organizing data into three structured layers:
+
+- **Bronze Layer**: Raw data ingestion from ERP and CRM systems via CSV files into SQL Server.
+- **Silver Layer**: Data cleansing, transformation, and normalization to ensure consistency and usability.
+- **Gold Layer**: Business-ready data modeled into a star schema for efficient reporting and analytics.
+
 ![Data Architecture](docs/data_architecture.png)
 
-1. **Bronze Layer**: Stores raw data as-is from the source systems. Data is ingested from CSV Files into SQL Server Database.
-2. **Silver Layer**: This layer includes data cleansing, standardization, and normalization processes to prepare data for analysis.
-3. **Gold Layer**: Houses business-ready data modeled into a star schema required for reporting and analytics.
-
 ---
-## 📖 Project Overview
 
-This project involves:
+## 🚀 Project Scope & Objectives
 
-1. **Data Architecture**: Designing a Modern Data Warehouse Using Medallion Architecture **Bronze**, **Silver**, and **Gold** layers.
-2. **ETL Pipelines**: Extracting, transforming, and loading data from source systems into the warehouse.
-3. **Data Modeling**: Developing fact and dimension tables optimized for analytical queries.
-4. **Analytics & Reporting**: Creating SQL-based reports and dashboards for actionable insights.
+### 🔧 Data Engineering
 
-🎯 This repository is an excellent resource for professionals and students looking to showcase expertise in:
-- SQL Development
-- Data Architect
-- Data Engineering  
-- ETL Pipeline Developer  
-- Data Modeling  
-- Data Analytics  
+**Goal**: Build a scalable SQL Server-based data warehouse to consolidate sales data and support business intelligence.
+
+**Key Tasks**:
+- Import and integrate data from ERP and CRM sources.
+- Address data quality issues through cleansing and validation.
+- Merge datasets into a unified analytical model.
+- Focus on current data snapshots (no historization).
+- Document the data model for both technical and business users.
 
 ---
 
----
-## 🏗️ Data Architecture
-## 🚀 Project Requirements
+### 📊 Business Intelligence & Reporting
 
-### Building the Data Warehouse (Data Engineering)
+**Goal**: Deliver actionable insights using SQL queries and dashboards.
 
-#### Objective
-Develop a modern data warehouse using SQL Server to consolidate sales data, enabling analytical reporting and informed decision-making.
+**Focus Areas**:
+- Customer segmentation and behavior analysis.
+- Product performance metrics.
+- Sales trend evaluation.
 
-#### Specifications
-- **Data Sources**: Import data from two source systems (ERP and CRM) provided as CSV files.
-- **Data Quality**: Cleanse and resolve data quality issues prior to analysis.
-- **Integration**: Combine both sources into a single, user-friendly data model designed for analytical queries.
-- **Scope**: Focus on the latest dataset only; historization of data is not required.
-- **Documentation**: Provide clear documentation of the data model to support both business stakeholders and analytics teams.
+These insights empower stakeholders to make data-driven decisions with confidence.
 
 ---
 
-### BI: Analytics & Reporting (Data Analysis)
+## 🧰 Skills Demonstrated
 
-#### Objective
-Develop SQL-based analytics to deliver detailed insights into:
-- **Customer Behavior**
-- **Product Performance**
-- **Sales Trends**
+This project highlights expertise in:
 
-These insights empower stakeholders with key business metrics, enabling strategic decision-making.  
+| Skill Area           | Tools & Techniques Used                     |
+|----------------------|---------------------------------------------|
+| Data Engineering     | SQL Server, ETL workflows, data cleansing   |
+| Data Modeling        | Star schema, fact/dimension tables          |
+| Analytics & BI       | SQL queries, KPI reporting, trend analysis  |
+| Architecture Design  | Medallion architecture (Bronze/Silver/Gold) |
 
-## 🛡️ License
+---
 
-This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and share this project with proper attribution.
+## 📄 License
 
-## 🌟 About Me
+This project is released under the [MIT License](LICENSE). Feel free to use, adapt, and share it with proper credit.
 
-Hi there! I'm **Janani Priya R P**. I’m a Data Engineer, eager to innovate and explore.
+---
 
+## 👩‍💻 About Me
+
+Hi, I’m **Janani Priya R P** — a passionate Data Engineer with hands-on experience in building scalable data pipelines and analytical solutions. I love turning raw data into meaningful insights and continuously strive to improve my craft.
