@@ -1,19 +1,109 @@
 /*
 ================================================================================
-Data Quality Checks – Bronze Layer: crm_prd_info
+Data Quality Checks – Bronze Layer
 ================================================================================
 Purpose:
-    This script performs a series of data validation checks on the 'bronze.crm_prd_info' table
-    to ensure data integrity, consistency, and readiness for promotion to the Silver layer.
+    This script performs integrity, formatting, and standardization checks on
+    the bronze table to ensure clean and consistent customer data.
 
 Checks Included:
-    - Primary key integrity (nulls, duplicates)
+    - Primary key validation (nulls, duplicates)
     - Record-level inspection for specific IDs
     - Latest record flagging using ROW_NUMBER
-    - Category ID mapping validation
-    - String formatting and whitespace cleanup
-    - Defaulting nulls for numeric fields
-    - Date sequencing validation
+    - Whitespace cleanup in string fields
+    - Gender and marital status standardization
+    - Value profiling for categorical fields
+================================================================================
+*/
+
+/*
+================================================================================
+Data Quality Checks – Bronze Layer: crm_cust_info
+================================================================================
+*/
+
+-- ==============================================================================
+-- Check 1: Detect NULLs or Duplicates in Primary Key (cst_id)
+-- Expectation: No results returned
+-- ==============================================================================
+SELECT cst_id, COUNT(*)
+FROM bronze.crm_cust_info
+GROUP BY cst_id
+HAVING COUNT(*) > 1 OR cst_id IS NULL;
+
+-- ==============================================================================
+-- Check 2: Inspect records for a specific duplicate cst_id (e.g., 29466)
+-- ==============================================================================
+SELECT *
+FROM bronze.crm_cust_info
+WHERE cst_id = 29466;
+
+-- ==============================================================================
+-- Check 3: Flag latest record per cst_id using ROW_NUMBER
+-- ==============================================================================
+SELECT *, ROW_NUMBER() OVER (PARTITION BY cst_id ORDER BY cst_create_date DESC) AS flag_last
+FROM bronze.crm_cust_info
+WHERE cst_id = 29466;
+
+-- ==============================================================================
+-- Check 4: Identify non-latest records for duplicate cst_id values
+-- ==============================================================================
+SELECT *
+FROM (
+    SELECT *, ROW_NUMBER() OVER (PARTITION BY cst_id ORDER BY cst_create_date DESC) AS flag_last
+    FROM bronze.crm_cust_info
+) t
+WHERE flag_last != 1;
+
+-- ==============================================================================
+-- Check 5: Detect unwanted leading/trailing spaces in string fields
+-- ==============================================================================
+SELECT cst_firstname
+FROM bronze.crm_cust_info
+WHERE cst_firstname != TRIM(cst_firstname);
+
+SELECT cst_lastname
+FROM bronze.crm_cust_info
+WHERE cst_lastname != TRIM(cst_lastname);
+
+SELECT DISTINCT cst_gndr
+FROM bronze.crm_cust_info
+WHERE cst_gndr != TRIM(cst_gndr);
+
+-- ==============================================================================
+-- Check 6: Standardize gender and marital status values
+-- ==============================================================================
+SELECT 
+    cst_id, 
+    cst_key, 
+    TRIM(cst_firstname) AS cst_firstname, 
+    TRIM(cst_lastname) AS cst_lastname, 
+    CASE 
+        WHEN UPPER(TRIM(cst_marital_status)) = 'S' THEN 'Single'
+        WHEN UPPER(TRIM(cst_marital_status)) = 'M' THEN 'Married'
+        ELSE 'n/a'
+    END AS cst_marital_status,
+    CASE 
+        WHEN UPPER(TRIM(cst_gndr)) = 'F' THEN 'Female'
+        WHEN UPPER(TRIM(cst_gndr)) = 'M' THEN 'Male'
+        ELSE 'n/a'
+    END AS cst_gndr, 
+    cst_create_date
+FROM (
+    SELECT *, ROW_NUMBER() OVER (PARTITION BY cst_id ORDER BY cst_create_date DESC) AS flag_last
+    FROM bronze.crm_cust_info
+    WHERE cst_id IS NOT NULL
+) t
+WHERE flag_last != 1;
+
+-- ==============================================================================
+-- Check 7: Profile distinct gender values for consistency review
+-- ==============================================================================
+SELECT DISTINCT cst_gndr
+FROM bronze.crm_cust_info;
+/*
+================================================================================
+Data Quality Checks – Bronze Layer: crm_prd_info
 ================================================================================
 */
 
