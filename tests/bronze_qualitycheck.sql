@@ -12,7 +12,7 @@ Purpose:
 ===============================================================================
 */
 
---check for null or duplicates for primaty keys
+--check for null or duplicates for primary keys
 select prd_id, count(*)
 from bronze.crm_prd_info
 group by prd_id
