@@ -4,15 +4,17 @@ Script Name   : Create Gold Layer Views
 ===============================================================================
 Purpose       :
     Define views for the Gold layer of the data warehouse, representing
-    the final dimension and fact tables in a star schema format.
+    finalized dimension and fact tables in a star schema model.
 
-    These views apply business logic and transformations to curated Silver layer
-    data, producing clean, enriched, and analytics-ready datasets.
+    These views apply necessary transformations to curated Silver layer data,
+    producing clean, enriched, and analytics-ready datasets for business reporting.
 
 Usage         :
-    - Intended for direct use in reporting, dashboards, and business intelligence queries.
+    - Query these views directly for dashboards, KPIs, and analytical insights.
+    - Serves as the foundation for BI tools and data consumers.
 ===============================================================================
 */
+
 -- =============================================================================
 -- Create Dimension: gold.dim_customers
 -- =============================================================================
@@ -79,7 +81,7 @@ CREATE VIEW gold.fact_sales AS
 SELECT
     sd.sls_ord_num  AS [Order Number],
     pr.product_key  AS [Product Key],
-    cu.customer_key AS [Customer Key],
+    cu.[Customer Key] AS [Customer Key],
     sd.sls_order_dt AS [Order Date],
     sd.sls_ship_dt  AS [Shipping Date],
     sd.sls_due_dt   AS [Due Date],
@@ -88,7 +90,7 @@ SELECT
     sd.sls_price    AS [Price]
 FROM silver.crm_sales_details sd
 LEFT JOIN gold.dim_products pr
-    ON sd.sls_prd_key = pr.product_number
+    ON sd.sls_prd_key = pr.[Product Number]
 LEFT JOIN gold.dim_customers cu
-    ON sd.sls_cust_id = cu.customer_id;
+    ON sd.sls_cust_id = cu.[Customer Id];
 GO
